@@ -24,24 +24,26 @@ get '/' do
   erb :index
 end
 
-
-
 # GET /users/new - display a form for making a new user
 get'/users/new' do
 erb :new
 end
+
 # POST /users - create a user based on params from form
 post '/users' do
   id += 1
   users.push({first:params[:first],last:params[:last],id:id})
   @users = users
-  erb :user_list
+  redirect '/'
+  # erb :user_list
 end
 
 get '/users' do 
   @users = users
-  erb :user_list
+  redirect '/'
+  # erb :user_list
 end
+
 # GET /users/:id - show a user's info by their id, this should display the info in a form
 get '/users/:id' do
   # "#{params[:id]}"
@@ -51,7 +53,24 @@ get '/users/:id' do
   @user=user
   erb :show_user
 end
-#
+
 # PUT /users/:id - update a user's info based on the form from GET /users/:id
-#
+put '/users/:id' do
+  users.each do |user| 
+    if user[:id] == params[:id].to_i 
+      user[:first]=params[:first_update]
+      user[:last]=params[:last_update]
+    end
+  end
+  @users = users
+  redirect '/'
+  # erb :user_list
+end
 # DELETE /users/:id - delete a user by their id
+
+delete '/users/:id' do
+users.delete_if {|user| user[:id]==params[:id].to_i}
+@users = users
+redirect '/'
+# erb :user_list
+end

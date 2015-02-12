@@ -9,10 +9,16 @@
 </head>
 <body>
   <h1>Please sign up!</h1>
-  <form action="/users" method="post">
-    First name:<input type="text" name="first" value="<%=@user[:first] %>" >
-    Last name:<input type="text" name="last" value="<%=@user[:last] %>">
-    <input type="submit" value="Create user">
+  <form action="/users/<%=@user[:id]%>" method="post">
+  <input type="hidden" name="_method" value="put">
+    First name:<input type="text" name="first_update" value="<%=@user[:first] %>" >
+    Last name:<input type="text" name="last_update" value="<%=@user[:last] %>">
+    <input type="submit" value="Update user">
+
+  </form>
+   <form action="/users/<%=@user[:id]%>" method="post">
+  <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="Delete user">
 
   </form>
 
